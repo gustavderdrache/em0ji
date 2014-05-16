@@ -3,6 +3,8 @@ require 'sinatra'
 require 'net/http'
 require 'json'
 
+$stdout.sync = true
+
 def nomoji
   $emoji = nil
 end
