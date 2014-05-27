@@ -32,11 +32,11 @@
   }
 </script>
 
-<strong>
-  <a href="javascript:only('group')">Only Ours</a>
-  <a href="javascript:only('global')">Only Hipchat's</a>
-  <a href="javascript:only('all')">All</a>
-</strong>
+<ul>
+  <li><a href="javascript:only('group')">Show Only Our Icons</a></li>
+  <li><a href="javascript:only('global')">Show Only Hipchat's Icons</a></li>
+  <li><a href="javascript:only('all')">All Icons</a></li>
+</ul>
 
 <% emoji.sort.each do |icon| %>
   <div class="<%= icon.type %>">
