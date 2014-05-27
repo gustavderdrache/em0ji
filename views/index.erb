@@ -27,15 +27,28 @@
 </style>
 
 <script type="text/javascript">
+  function setFromLocationHash() {
+    switch (location.hash) {
+      case '#group':
+      case '#global':
+        only(location.hash.substr(1));
+        break;
+      default:
+        only('all');
+    }
+  }
+
   function only(type) {
     document.body.setAttribute('class', type);
   }
+
+  window.addEventListener('hashchange', setFromLocationHash);
 </script>
 
 <ul>
-  <li><a href="javascript:only('group')">Show Only Our Icons</a></li>
-  <li><a href="javascript:only('global')">Show Only Hipchat's Icons</a></li>
-  <li><a href="javascript:only('all')">All Icons</a></li>
+  <li><a href="#group">Show Only Our Icons</a></li>
+  <li><a href="#global">Show Only Hipchat's Icons</a></li>
+  <li><a href="#all">All Icons</a></li>
 </ul>
 
 <% emoji.sort.each do |icon| %>
@@ -46,4 +59,8 @@
     </p>
   </div>
 <% end %>
+
+<script type="text/javascript">
+  setFromLocationHash();
+</script>
 
