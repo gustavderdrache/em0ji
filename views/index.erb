@@ -1,0 +1,49 @@
+<style>
+  body {
+    margin-left: 100px;
+    margin-right: 100px;
+  }
+
+  div {
+    display: inline-block;
+    height: 50px;
+    min-width: 50px;
+    padding: 8px;
+    margin-top: 10px;
+  }
+
+  p {
+    text-align: center;
+    font-size: 10px;
+  }
+
+  body.group div.global {
+    display: none;
+  }
+
+  body.global div.group {
+    display: none;
+  }
+</style>
+
+<script type="text/javascript">
+  function only(type) {
+    document.body.setAttribute('class', type);
+  }
+</script>
+
+<strong>
+  <a href="javascript:only('group')">Only Ours</a>
+  <a href="javascript:only('global')">Only Hipchat's</a>
+  <a href="javascript:only('all')">All</a>
+</strong>
+
+<% emoji.sort.each do |icon| %>
+  <div class="<%= icon.type %>">
+    <p>
+      <img src="<%= icon.url %>" /><br />
+      (<%= icon.short %>)
+    </p>
+  </div>
+<% end %>
+

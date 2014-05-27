@@ -31,7 +31,6 @@ def fetch_all
     emoji << Emojiton.new(short, url, 'group')
   end
 
-  puts emoji.inspect
   emoji
 end
 
@@ -54,9 +53,7 @@ def fetch_type(type='all')
 end
 
 def fetch_page(url, token)
-  puts url + token
   res = JSON.parse(Net::HTTP.get(URI(url + token)))
-  puts res
   out = res['items'].inject({}) do |r,v|
     r[v['shortcut']] = v['url']
     r
@@ -67,13 +64,7 @@ def fetch_page(url, token)
 end
 
 get '/' do
-  ret = "<style>body { margin-left: 100px; margin-right: 100px; } div { display: inline-block; height: 50px; min-width: 50px; padding: 8px; margin-top: 10px; } p { text-align: center; font-size: 10px; } body.group div.global { display: none; } body.global div.group { display: none; }</style>"
-  ret += '<script type="text/javascript">function only(type) { document.body.setAttribute("class", type); }</script>'
-  ret += '<strong><a href="javascript:only(\'group\')">Only Ours</a> <a href="javascript:only(\'global\')">Only Hipchat\'s</a> <a href="javascript:only(\'all\')">All</a></strong>'
-  emoji.sort.each do |oji|
-    ret += '<div class="%s"><p><img src="%s" /><br />(%s)</p></div>' % [oji.type, oji.url, oji.short]
-  end
-  ret
+  erb :index, :locals => { emoji: emoji.sort }
 end
 
 delete '/' do
