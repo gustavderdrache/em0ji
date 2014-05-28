@@ -24,6 +24,10 @@
   body.global div.group {
     display: none;
   }
+
+  footer {
+    text-align: center;
+  }
 </style>
 
 <script type="text/javascript">
@@ -64,3 +68,11 @@
   setFromLocationHash();
 </script>
 
+<footer>
+  <p>
+    Clear the cache:
+    <code>
+      curl -XDELETE <%= base_url %>
+    </code>
+  </p>
+</footer>
