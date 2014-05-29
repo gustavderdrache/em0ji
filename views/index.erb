@@ -28,8 +28,58 @@
   footer {
     text-align: center;
   }
-</style>
 
+  div p {
+    cursor: pointer;
+  }
+
+  #notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+  }
+</style>
+<ul>
+  <li><a href="#group">Show Only Our Icons</a></li>
+  <li><a href="#global">Show Only Hipchat's Icons</a></li>
+  <li><a href="#all">All Icons</a></li>
+</ul>
+
+<% emoji.sort.each do |icon| %>
+  <div class="<%= icon.type %>">
+    <p class="emoji">
+      <img src="<%= icon.url %>" /><br />
+      <span>(<%= icon.short %>)</span>
+    </p>
+  </div>
+<% end %>
+
+<div id="global-zeroclipboard-html-bridge" class="global-zeroclipboard-container" data-clipboard-ready="true" style="position: absolute; left: -9999px; top: -9999px; width: 66px; height: 66px; z-index: 10000;">
+  <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" id="global-zeroclipboard-flash-bridge" width="100%" height="100%">
+    <param name="movie" value="/ZeroClipboard.swf?nocache=1401374081659">
+    <param name="allowScriptAccess" value="sameDomain">
+    <param name="scale" value="exactfit">
+    <param name="loop" value="false">
+    <param name="menu" value="false">
+    <param name="quality" value="best">
+    <param name="bgcolor" value="#ffffff">
+    <param name="wmode" value="transparent">
+    <param name="flashvars" value="">
+    <embed src="ZeroClipboard.swf?nocache=1401374081659" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="100%" height="100%" name="global-zeroclipboard-flash-bridge" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" wmode="transparent" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="" scale="exactfit">
+  </object>
+</div>
+
+<footer>
+  <p>
+    Clear the cache:
+    <code>
+      curl -XDELETE <%= base_url %>
+    </code>
+  </p>
+</footer>
+
+<script type="text/javascript" src="ZeroClipboard.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript">
   function setFromLocationHash() {
     switch (location.hash) {
@@ -47,32 +97,31 @@
   }
 
   window.addEventListener('hashchange', setFromLocationHash);
-</script>
 
-<ul>
-  <li><a href="#group">Show Only Our Icons</a></li>
-  <li><a href="#global">Show Only Hipchat's Icons</a></li>
-  <li><a href="#all">All Icons</a></li>
-</ul>
+  var client = new ZeroClipboard(null, { moviePath: "ZeroClipboard.swf" }),
+      shortcut = '';
 
-<% emoji.sort.each do |icon| %>
-  <div class="<%= icon.type %>">
-    <p>
-      <img src="<%= icon.url %>" /><br />
-      (<%= icon.short %>)
-    </p>
-  </div>
-<% end %>
+  client.on("load", function() {
+    $("p.emoji").hover(function(e) {
+      var target = $(e.target).closest('p');
+      shortcut = target.find('span').text();
+      client.setText(shortcut);
+      client.glue(this);
+    });
+  });
 
-<script type="text/javascript">
+  client.on("complete", function() {
+    console.log('Complete');
+
+    $('#notification').remove();
+    $('<div id="notification">Copied text ' + shortcut + ' to clipboard!</div>')
+      .appendTo('body');
+
+    setTimeout(function() {
+      $('#notification').remove();
+    }, 1000);
+  });
+
   setFromLocationHash();
-</script>
 
-<footer>
-  <p>
-    Clear the cache:
-    <code>
-      curl -XDELETE <%= base_url %>
-    </code>
-  </p>
-</footer>
+</script>
