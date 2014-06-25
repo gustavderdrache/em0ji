@@ -34,6 +34,10 @@
   footer {
     text-align: center;
   }
+
+  label {
+    display: block;
+  }
 </style>
 
 <script type="text/javascript">
@@ -60,6 +64,8 @@
   <li><a href="#global">Show Only Hipchat's Icons</a></li>
   <li><a href="#all">All Icons</a></li>
 </ul>
+
+<label>Find something: <input type="text"></label>
 
 <% emoji.sort.each do |icon| %>
   <div class="<%= icon.type %>">
