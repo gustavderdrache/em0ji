@@ -104,7 +104,7 @@ function change(event) {
       elements = document.querySelectorAll('div' + query + ' p');
 
   [].forEach.call(elements, function (elt) {
-    var found = elt.innerText.indexOf(search) > 0;
+    var found = elt.textContent.indexOf(search) >= 0;
 
     elt.parentNode.setAttribute('class', found ? 'hit' : 'miss');
   });
