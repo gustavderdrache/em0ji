@@ -100,7 +100,7 @@ function change(event) {
     query = '.' + query;
   }
 
-  var search = this.value + String.fromCharCode(event.which),
+  var search = this.value,
       elements = document.querySelectorAll('div' + query + ' p');
 
   [].forEach.call(elements, function (elt) {
@@ -112,5 +112,5 @@ function change(event) {
 
 var inputs = document.getElementsByTagName('input');
 
-inputs[0].addEventListener('keypress', change);
+inputs[0].addEventListener('keyup', change);
 </script>
