@@ -12,15 +12,17 @@
     margin-top: 10px;
   }
 
+  div.hit {
+    zoom: 200%;
+  }
+
+  div.miss{
+    display: none;
+  }
+
   p {
     text-align: center;
     font-size: 10px;
-  }
-
-  p.yep {
-    font-size: xx-large;
-    font-weight: bold;
-    color: red;
   }
 
   body.group div.global {
@@ -104,7 +106,7 @@ function change(event) {
   [].forEach.call(elements, function (elt) {
     var found = elt.innerText.indexOf(search) > 0;
 
-    elt.setAttribute('class', found ? 'yep' : '');
+    elt.parentNode.setAttribute('class', found ? 'hit' : 'miss');
   });
 }
 
