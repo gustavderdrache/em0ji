@@ -96,13 +96,6 @@ var input = document.querySelector('input');
 input.addEventListener('keyup', triggerSearch);
 
 function triggerSearch() {
-  var query = document.body.getAttribute('class');
-  if (query === 'all') {
-    query = '';
-  } else {
-    query = '.' + query;
-  }
-
   var search = this.value,
       elements = document.getElementsByTagName('div');
 
