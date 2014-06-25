@@ -92,7 +92,22 @@
 </footer>
 
 <script>
-function change(event) {
+function pruneHitsAndMisses() {
+  var elements = document.getElementsByTagName('div.hit');
+
+  [].forEach.call(elements, function (elt) {
+    elt.classList.remove('hit');
+  });
+
+  var elements = document.getElementsByTagName('div.miss');
+  [].forEach.call(elements, function (elt) {
+    elt.classList.remove('miss');
+  });
+}
+
+function triggerSearch() {
+  pruneHitsAndMisses();
+
   var query = document.body.getAttribute('class');
   if (query === 'all') {
     query = '';
@@ -100,17 +115,22 @@ function change(event) {
     query = '.' + query;
   }
 
-  var search = this.value,
+  var search = document.getElementsByTagName('input')[0].value,
       elements = document.querySelectorAll('div' + query + ' p');
 
-  [].forEach.call(elements, function (elt) {
-    var found = elt.textContent.indexOf(search) >= 0;
+  if (search) {
+    [].forEach.call(elements, function (elt) {
+      var found = elt.textContent.indexOf(search) >= 0,
+          targetClassList = elt.parentNode.classList;
 
-    elt.parentNode.setAttribute('class', found ? 'hit' : 'miss');
-  });
+      targetClassList.add(found ? 'hit' : 'miss');
+    });
+  }
 }
 
 var inputs = document.getElementsByTagName('input');
 
-inputs[0].addEventListener('keyup', change);
+inputs[0].addEventListener('keyup', triggerSearch);
+window.addEventListener('hashchange', triggerSearch);
+
 </script>
