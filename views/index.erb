@@ -92,19 +92,13 @@ function change(event) {
     query = '.' + query;
   }
 
-  [].forEach.call(document.querySelectorAll('p'), function (elt) {
-      elt.setAttribute('class', '');
-  });
-
   var search = this.value + String.fromCharCode(event.which),
       elements = document.querySelectorAll('div' + query + ' p');
 
-  elements = [].filter.call(elements, function (elt) {
-    return elt.innerText.indexOf(search) > 0;
-  });
-
   [].forEach.call(elements, function (elt) {
-      elt.setAttribute('class', 'yep');
+    var found = elt.innerText.indexOf(search) > 0;
+
+    elt.setAttribute('class', found ? 'yep' : '');
   });
 }
 
