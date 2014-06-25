@@ -17,6 +17,12 @@
     font-size: 10px;
   }
 
+  p.yep {
+    font-size: xx-large;
+    font-weight: bold;
+    color: red;
+  }
+
   body.group div.global {
     display: none;
   }
@@ -27,6 +33,10 @@
 
   footer {
     text-align: center;
+  }
+
+  label {
+    display: block;
   }
 </style>
 
@@ -55,6 +65,8 @@
   <li><a href="#all">All Icons</a></li>
 </ul>
 
+<label>Find something: <input type="text"></label>
+
 <% emoji.sort.each do |icon| %>
   <div class="<%= icon.type %>">
     <p>
@@ -76,3 +88,27 @@
     </code>
   </p>
 </footer>
+
+<script>
+function change(event) {
+  var query = document.body.getAttribute('class');
+  if (query === 'all') {
+    query = '';
+  } else {
+    query = '.' + query;
+  }
+
+  var search = this.value + String.fromCharCode(event.which),
+      elements = document.querySelectorAll('div' + query + ' p');
+
+  [].forEach.call(elements, function (elt) {
+    var found = elt.innerText.indexOf(search) > 0;
+
+    elt.setAttribute('class', found ? 'yep' : '');
+  });
+}
+
+var inputs = document.getElementsByTagName('input');
+
+inputs[0].addEventListener('keypress', change);
+</script>
