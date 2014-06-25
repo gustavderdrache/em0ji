@@ -93,14 +93,10 @@
 
 <script>
 function pruneHitsAndMisses() {
-  var elements = document.getElementsByTagName('div.hit');
+  var elements = document.getElementsByTagName('div');
 
   [].forEach.call(elements, function (elt) {
     elt.classList.remove('hit');
-  });
-
-  var elements = document.getElementsByTagName('div.miss');
-  [].forEach.call(elements, function (elt) {
     elt.classList.remove('miss');
   });
 }
